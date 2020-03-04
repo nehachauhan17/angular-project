@@ -6,5 +6,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'hello-world';
+  title = 'angular hello-world';
+
+  clickMe(neha){
+    console.log('hi', neha);
+  }
 }

@@ -1,0 +1,15 @@
+<hr>
+<h2>User list pagination</h2>
+<ul>
+    <li *ngFor="let x of userList">
+        {{ x }}</li>
+</ul>
+<div>
+    <span class="btn" [class.disableBtn]="isdisable"><a href="#">first</a></span>
+    <span class="btn" [class.disableBtn]="isdisable"><a href="#">previous</a></span>
+    <ul>
+        <li style="float: left; background: #cccccc; list-style: none; margin: 0 10px; padding: 0 10px;" *ngFor="let x of [].constructor(control); let i = index;" (click)="onButtonClick(i)">{{ i+1 }}</li>
+    </ul>
+    <span class="btn" [class.disableBtn]="isdisable"><a href="#">next</a></span>
+    <span class="btn" [class.disableBtn]="isdisable"><a href="#">last</a></span>
+</div>
