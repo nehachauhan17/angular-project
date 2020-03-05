@@ -5,11 +5,11 @@
         {{ x }}</li>
 </ul>
 <div>
-    <span class="btn" [class.disableBtn]="isdisable"><a href="#">first</a></span>
-    <span class="btn" [class.disableBtn]="isdisable"><a href="#">previous</a></span>
+    <span class="btn" [class.disableBtn]="isdisable" [class.disableBtn]= "isdisablefirst" (click)="onfirst()"><a href="#">first</a></span>
+    <span class="btn" [class.disableBtn]="isdisable" [class.disableBtn]= "isdisablefirst" (click)="onPrevious(currentPage)"><a href="#">previous</a></span>
     <ul>
         <li style="float: left; background: #cccccc; list-style: none; margin: 0 10px; padding: 0 10px;" *ngFor="let x of [].constructor(control); let i = index;" (click)="onButtonClick(i)">{{ i+1 }}</li>
     </ul>
-    <span class="btn" [class.disableBtn]="isdisable"><a href="#">next</a></span>
-    <span class="btn" [class.disableBtn]="isdisable"><a href="#">last</a></span>
+    <span class="btn" [class.disableBtn]="isdisable" [class.disableBtn]= "isdisablelast" (click)="onNext(currentPage)"><a href="#">next</a></span>
+    <span class="btn" [class.disableBtn]="isdisable" [class.disableBtn]= "isdisablelast" (click)="onlast()"><a href="#">last</a></span>
 </div>
