@@ -7,50 +7,76 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./pagination.component.scss']
 })
 export class PaginationComponent implements OnInit {
-  userList; // userlist
+  completeUserList; // userlist
+  userList; // filtered userlist on the basis of pagesize
   pageSize: number = 10; // default pagination size
-  buttons; // pagination control buttons
-  isdisable;
-  control;
+  currentPage = 0; // default current page
+  isdisable; // used to disable buttons on the basis of condiition
+  isdisablefirst;
+  isdisablelast;
+  control; // pagination control buttons
   
   constructor(service: PaginationService) {
-    this.userList = service.getUserListData();
-    this.pagination(this.userList, this.pageSize);
+    this.completeUserList = service.getUserListData();
+    this.pagination(this.completeUserList, this.pageSize);
     // pagination count on basis of data 
-    this.control= Math.ceil(this.userList.length/this.pageSize);
-    //this.buttons = this.counter(control);
+    this.control= Math.ceil(this.completeUserList.length/this.pageSize);
   }
-  // pagination count on basis of data 
- // private counter(i: number) {
-   // return new Array(i);
- // }
 
-  private pagination(page: string, size: number): string {
-    let listcount = page.length;
-    if(listcount > size){ 
-      for (var index = 0; index < listcount; index += size) {
-        var myChunk = page.slice(index, index+size);
-        console.log('curnt pagr' + myChunk);
-        if(myChunk.length < size){
-          this.isdisable = true;
-          console.log('hide next last...' + myChunk);
+  private pagination(list: string, size: number) {
+    let listcount = list.length;
+    if(listcount > size){  //check if completelist is > 10
+      this.userList = this.completeUserList.slice(this.currentPage*size,(this.currentPage+1)*size); //filtered userlist on the basis of pagesize
+        if(this.userList.length < size){  //check if  filtered userlist is < 10
+          this.isdisablelast = true;
+          this.isdisablefirst = false;
         }
         else{
-          this.isdisable = true;
-          console.log('show all btn...' + myChunk);
+          if(this.currentPage == 0){
+            this.isdisablefirst = true;
+            this.isdisablelast = false;
+          }
+          else{
+            this.isdisable = false;
+            this.isdisablefirst = false;
+            this.isdisablelast = false;
+          }
         }
-      }
     }
     else{
+      this.userList = this.completeUserList;
       this.isdisable = true;
-      console.log('hide all butn...' + page);
     }
-    return myChunk;
   }
 
+  //show userlist on the basis of control button click (1,2, etc)
   private onButtonClick(value: number){
-    var currentPage = value;
-    console.log('val' + currentPage);
+    this.currentPage = value;
+    this.pagination(this.completeUserList, this.pageSize);
+  }
+  
+  //show userlist on the basis of next button click
+  private onNext(currentPage){
+    this.currentPage = currentPage + 1;
+    this.pagination(this.completeUserList, this.pageSize);
+  }
+
+  //show userlist on the basis of previous button click
+   onPrevious(currentPage){
+    this.currentPage = currentPage - 1;
+    this.pagination(this.completeUserList, this.pageSize);
+  }
+
+  //show userlist on the basis of first button click
+  private onfirst(){
+    this.currentPage = 0;
+    this.pagination(this.completeUserList, this.pageSize);
+  }
+
+  //show userlist on the basis of last button click
+  private onlast(){
+    this.currentPage = this.control - 1;
+    this.pagination(this.completeUserList, this.pageSize);
   }
 
   ngOnInit() {
