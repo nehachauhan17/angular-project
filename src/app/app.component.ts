@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import * as _ from 'underscore';
 
 @Component({
   selector: 'app-root',
@@ -7,8 +8,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'angular hello-world';
-
+  
   clickMe(neha){
     console.log('hi', neha);
+    console.log('now: ', _.now());
   }
 }
